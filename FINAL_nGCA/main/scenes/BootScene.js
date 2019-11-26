@@ -72,7 +72,7 @@ class BootScene extends Phaser.Scene {
         music = this.sound.add("menuMusic");
         musicConfig = {
           mute: muteGame,
-          volume: 0.4,
+          volume: 0.3,
           loop: true,
           rate: 1,
           detune: 0,
