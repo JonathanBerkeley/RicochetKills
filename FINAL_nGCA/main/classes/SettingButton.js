@@ -50,6 +50,12 @@ class SettingButton extends Phaser.GameObjects.Container {
         this.add(this.button);
         this.add(this.buttonText);
         // listen for events
+        this.button.on('pointerover', () => {
+            this.button.setTexture(this.hoverKey);
+        });
+        this.button.on('pointerout', () => {
+            this.button.setTexture(this.key);
+        });
         this.button.on('pointerdown', () => {
             if (this.mORl == 1) {
                 var menuClick = new Audio('/assets/sound/menuClick.wav'); //Javascript way to load audio, since uibutton doesn't inherit phaser scene

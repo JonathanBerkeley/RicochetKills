@@ -55,7 +55,6 @@ class GameScene extends Phaser.Scene {
     }
 
     create() {
-        this.createInput();
         this.createBackground();
         this.createPlayer();
         this.createEnemiesAndObstacles();
@@ -77,8 +76,6 @@ class GameScene extends Phaser.Scene {
         this.myline = new Phaser.Geom.Line(shooterPointx, shooterPointy, 0, 0);
     }
 
-    createInput() {
-    }
 
     createBackground() {
         var randomBg = randomNumberFromRange(1, 3); //Picks one of the three backgrounds available
@@ -210,6 +207,7 @@ class GameScene extends Phaser.Scene {
                     }
                     if (this.enemy[i].x === 10000 && this.enemy[i].y === 10000) { //Checks if enemies are in dead zone
                         this.killCount++;
+                        //Bonus adding section, rewards skillful shots
                         if(this.bounceCount > 1)
                             score+= 25;
                         if(this.bounceCount > 3)
