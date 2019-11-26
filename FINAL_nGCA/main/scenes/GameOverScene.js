@@ -20,7 +20,7 @@ create() {
     this.add.image(this.scaleW / 2, this.scaleH * 0.22, 'gameOver').setOrigin(0.5);
     this.add.image(this.scaleW * 0.84, this.scaleH * 0.85, 'babyYoda');
 
-    this.deathText = "You ran out of ammo!";
+    this.deathText = "Out of ammo you are!";
     this.scoreText = this.add.text(this.scaleW/2, this.scaleH * 0.53, this.deathText + "\n" + "\nScore: " + score + "\nHigh score: " + highScore, {
         fontFamily: "spacefont",
         fontSize: '48px',
