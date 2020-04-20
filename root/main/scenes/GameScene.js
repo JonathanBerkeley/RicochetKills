@@ -64,8 +64,8 @@ class GameScene extends Phaser.Scene {
 
     createGraphics() {
         var setWidth = 0;
-        if(showLine){ //User setting for line guide for last shot
-            setWidth=4;
+        if (showLine) { //User setting for line guide for last shot
+            setWidth = 4;
         }
         this.graphics = this.add.graphics({ //Graphics for shooting trace line
             lineStyle: {
@@ -111,7 +111,7 @@ class GameScene extends Phaser.Scene {
             if (this.enemy[i].x < shooterPointx + (innerWidth / 10) + 50) {
                 this.enemy[i].x += innerWidth / 3;
             }
-            this.enemy[i].setScale((spriteScale*2)+0.30);
+            this.enemy[i].setScale((spriteScale * 2) + 0.30);
             this.physics.world.enable([this.enemy[i]]);
             this.enemy[i].body.setAllowGravity(true);
             this.enemy[i].body.setGravity(0, 20000); //Makes enemies fall into position
@@ -120,12 +120,19 @@ class GameScene extends Phaser.Scene {
         this.obstacle = [];
         for (var x = 0; x < this.requestedObstacleCount; x++) { //Responsible for obstacle generation
             var pickPlatform = randomNumberFromRange(1, 3);
-            if (pickPlatform === 1)
-                this.obstacle[x] = this.physics.add.sprite(randomNumberFromRange(0, innerWidth), randomNumberFromRange(0, innerHeight), 'platform1');
-            if (pickPlatform === 2)
-                this.obstacle[x] = this.physics.add.sprite(randomNumberFromRange(0, innerWidth), randomNumberFromRange(0, innerHeight), 'platform3');
-            if (pickPlatform === 3)
-                this.obstacle[x] = this.physics.add.sprite(randomNumberFromRange(0, innerWidth), randomNumberFromRange(0, innerHeight), 'platform3R');
+            switch (pickPlatform) {
+                case 1:
+                    this.obstacle[x] = this.physics.add.sprite(randomNumberFromRange(0, innerWidth), randomNumberFromRange(0, innerHeight), 'platform1');
+                    break;
+                case 2:
+                    this.obstacle[x] = this.physics.add.sprite(randomNumberFromRange(0, innerWidth), randomNumberFromRange(0, innerHeight), 'platform3');
+                    break;
+                case 3:
+                    this.obstacle[x] = this.physics.add.sprite(randomNumberFromRange(0, innerWidth), randomNumberFromRange(0, innerHeight), 'platform3R');
+                    break;
+                default:
+                    break;
+            }
             this.obstacle[x].setScale(spriteScale);
             this.physics.world.enable([this.obstacle[x]]);
             this.obstacle[x].body.setAllowGravity(false);
@@ -159,17 +166,17 @@ class GameScene extends Phaser.Scene {
     }
 
     createText() { //Initial text on infobar
-        this.textKillCount = this.add.text(innerWidth/2, 10, "KILLS: " + this.killCount + "/" + this.requestedEnemyCount, {
+        this.textKillCount = this.add.text(innerWidth / 2, 10, "KILLS: " + this.killCount + "/" + this.requestedEnemyCount, {
             fontFamily: "spacefont",
             fontSize: '16px',
             fill: '#0090d2'
         }).setOrigin(0.5);
-        this.textAmmunition = this.add.text(innerWidth/2 - this.textKillCount.width - 20, 10, "AMMO: " + this.ammunition + "/" + MAX_AMMO, {
+        this.textAmmunition = this.add.text(innerWidth / 2 - this.textKillCount.width - 20, 10, "AMMO: " + this.ammunition + "/" + MAX_AMMO, {
             fontFamily: "spacefont",
             fontSize: '16px',
             fill: '#0090d2'
         }).setOrigin(0.5);
-        this.textScore = this.add.text(innerWidth/2 + this.textKillCount.width + 20, 10, "SCORE: " + score, {
+        this.textScore = this.add.text(innerWidth / 2 + this.textKillCount.width + 20, 10, "SCORE: " + score, {
             fontFamily: "spacefont",
             fontSize: '16px',
             fill: '#0090d2'
@@ -183,7 +190,7 @@ class GameScene extends Phaser.Scene {
         if (this.tickrate === 10000) {
             this.tickrate = 40;
         }
-        if (ESCKey.isDown){ //Allows quitting to main menu
+        if (ESCKey.isDown) { //Allows quitting to main menu
             if (confirm("Quit to main menu?")) {
                 this.scene.start('Title');
             }
@@ -195,7 +202,7 @@ class GameScene extends Phaser.Scene {
             this.allowShooting = false; //Prevents player from shooting while a laser is active
             for (var i = 0; i < this.requestedEnemyCount; i++) {
                 if (Phaser.Geom.Intersects.RectangleToRectangle(this.laser.getBounds(), this.enemy[i].getBounds())) { //Collision with laser detection
-                    if(!muteGame)
+                    if (!muteGame)
                         this.generateRandomDeathSound(); //Responsible for random enemy death audio playing
                     this.enemy[i].body.setAllowGravity(false);
                     this.enemy[i].setCollideWorldBounds(false);
@@ -208,12 +215,12 @@ class GameScene extends Phaser.Scene {
                     if (this.enemy[i].x === 10000 && this.enemy[i].y === 10000) { //Checks if enemies are in dead zone
                         this.killCount++;
                         //Bonus adding section, rewards skillful shots
-                        if(this.bounceCount > 1)
-                            score+= 25;
-                        if(this.bounceCount > 3)
-                            score+= 25;
-                        if(this.bounceCount > 5)
-                            score+= 25; //Bonus for ricocheting projectile, skill bonus
+                        if (this.bounceCount > 1)
+                            score += 25;
+                        if (this.bounceCount > 3)
+                            score += 25;
+                        if (this.bounceCount > 5)
+                            score += 25; //Bonus for ricocheting projectile, skill bonus
                         if (this.ammunition === MAX_AMMO - 1) {
                             score += 125; //First shot bonus
                         } else {
@@ -229,13 +236,13 @@ class GameScene extends Phaser.Scene {
                             score += 100; //Third shot killed remaining enemies bonus
                         }
                         this.textScore.destroy();
-                        this.textScore = this.add.text(innerWidth/2 + this.textKillCount.width + 20, 10, "SCORE: " + score, {
+                        this.textScore = this.add.text(innerWidth / 2 + this.textKillCount.width + 20, 10, "SCORE: " + score, {
                             fontFamily: "spacefont",
                             fontSize: '16px',
                             fill: '#0090d2'
                         }).setOrigin(0.5);
                         this.textKillCount.destroy(); //Clears previous text
-                        this.textKillCount = this.add.text(innerWidth/2, 10, "KILLS: " + this.killCount + "/" + this.requestedEnemyCount, {
+                        this.textKillCount = this.add.text(innerWidth / 2, 10, "KILLS: " + this.killCount + "/" + this.requestedEnemyCount, {
                             fontFamily: "spacefont",
                             fontSize: '16px',
                             fill: '#0090d2'
@@ -264,7 +271,7 @@ class GameScene extends Phaser.Scene {
                     this.laser.destroy();
                     this.allowShooting = true; //Allows player to shoot again
                 }
-                if(!muteGame)
+                if (!muteGame)
                     this.generateRandomRicochetSound(); //Responsible for playing a random ricochet sound
                 this.bTick = 0;
                 this.rRecChange = 0;
@@ -278,7 +285,7 @@ class GameScene extends Phaser.Scene {
             if (this.tickrate >= this.logShootTick + 50 || this.ammunition === MAX_AMMO) {
                 this.ignoreDupes = game.input.mousePointer.x + game.input.mousePointer.y;
                 if (this.ignoreDupes != this.storeLast) {
-                    if(!muteGame)
+                    if (!muteGame)
                         this.sound.play('shoot');
                     this.bounceCount = 0;
                     this.createLaser();
@@ -288,13 +295,13 @@ class GameScene extends Phaser.Scene {
                     this.ammunition--;
                     this.textAmmunition.destroy();
                     if (this.ammunition === 0)
-                        this.textAmmunition = this.add.text(innerWidth/2 - this.textKillCount.width - 20, 10, "AMMO: " + this.ammunition + "/" + MAX_AMMO, {
+                        this.textAmmunition = this.add.text(innerWidth / 2 - this.textKillCount.width - 20, 10, "AMMO: " + this.ammunition + "/" + MAX_AMMO, {
                             fontFamily: "spacefont",
                             fontSize: '16px',
                             fill: '#ff0000'
                         }).setOrigin(0.5);
                     else {
-                        this.textAmmunition = this.add.text(innerWidth/2 - this.textKillCount.width - 20, 10, "AMMO: " + this.ammunition + "/" + MAX_AMMO, {
+                        this.textAmmunition = this.add.text(innerWidth / 2 - this.textKillCount.width - 20, 10, "AMMO: " + this.ammunition + "/" + MAX_AMMO, {
                             fontFamily: "spacefont",
                             fontSize: '16px',
                             fill: '#0090d2'
@@ -326,41 +333,65 @@ class GameScene extends Phaser.Scene {
     generateRandomRicochetSound() {
         var randomRicochetSound = randomNumberFromRange(1, 10);
         this.sound.volume = 0.7;
-        if (randomRicochetSound === 1)
-            this.sound.play('ricochet1');
-        else if (randomRicochetSound === 2)
-            this.sound.play('ricochet2');
-        else if (randomRicochetSound === 3)
-            this.sound.play('ricochet3');
-        else if (randomRicochetSound === 4)
-            this.sound.play('ricochet4');
-        else if (randomRicochetSound === 5)
-            this.sound.play('ricochet5');
-        else if (randomRicochetSound === 6)
-            this.sound.play('ricochet6');
-        else if (randomRicochetSound === 7)
-            this.sound.play('ricochet7');
-        else if (randomRicochetSound === 8)
-            this.sound.play('ricochet8');
-        else if (randomRicochetSound === 9)
-            this.sound.play('ricochet9');
-        else if (randomRicochetSound === 10)
-            this.sound.play('ricochet10');
+        switch (randomRicochetSound) {
+            case 1:
+                this.sound.play('ricochet1');
+                break;
+            case 2:
+                this.sound.play('ricochet2');
+                break;
+            case 3:
+                this.sound.play('ricochet3');
+                break;
+            case 4:
+                this.sound.play('ricochet4');
+                break;
+            case 5:
+                this.sound.play('ricochet5');
+                break;
+            case 6:
+                this.sound.play('ricochet6');
+                break;
+            case 7:
+                this.sound.play('ricochet7');
+                break;
+            case 8:
+                this.sound.play('ricochet8');
+                break;
+            case 9:
+                this.sound.play('ricochet9');
+                break;
+            case 10:
+                this.sound.play('ricochet10');
+                break;
+            default:
+                break;
+        }
     }
     generateRandomDeathSound() {
         var randomDeathSound = randomNumberFromRange(1, 6);
-        if (randomDeathSound === 1)
-            this.sound.play('death1');
-        if (randomDeathSound === 2)
-            this.sound.play('death2');
-        if (randomDeathSound === 3)
-            this.sound.play('death3');
-        if (randomDeathSound === 4)
-            this.sound.play('death4');
-        if (randomDeathSound === 5)
-            this.sound.play('death5');
-        if (randomDeathSound === 6)
-            this.sound.play('death6');
+        switch (randomDeathSound) {
+            case 1:
+                this.sound.play('death1');
+                break;
+            case 2:
+                this.sound.play('death2');
+                break;
+            case 3:
+                this.sound.play('death3');
+                break;
+            case 4:
+                this.sound.play('death4');
+                break;
+            case 5:
+                this.sound.play('death5');
+                break;
+            case 6:
+                this.sound.play('death6');
+                break;
+            default:
+                break;
+        }
     }
     gameOver() { //For gameover events
         this.scene.start('GameOver');
