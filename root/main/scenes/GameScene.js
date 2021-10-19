@@ -52,6 +52,8 @@ class GameScene extends Phaser.Scene {
         this.graphics;
         this.myline;
         ESCKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.ESC);
+
+        this.sound.volume = 0.7;
     }
 
     create() {
@@ -331,71 +333,17 @@ class GameScene extends Phaser.Scene {
     }
 
     generateRandomRicochetSound() {
-        var randomRicochetSound = randomNumberFromRange(1, 10);
-        this.sound.volume = 0.7;
-        switch (randomRicochetSound) {
-            case 1:
-                this.sound.play('ricochet1');
-                break;
-            case 2:
-                this.sound.play('ricochet2');
-                break;
-            case 3:
-                this.sound.play('ricochet3');
-                break;
-            case 4:
-                this.sound.play('ricochet4');
-                break;
-            case 5:
-                this.sound.play('ricochet5');
-                break;
-            case 6:
-                this.sound.play('ricochet6');
-                break;
-            case 7:
-                this.sound.play('ricochet7');
-                break;
-            case 8:
-                this.sound.play('ricochet8');
-                break;
-            case 9:
-                this.sound.play('ricochet9');
-                break;
-            case 10:
-                this.sound.play('ricochet10');
-                break;
-            default:
-                break;
-        }
+        this.sound.play('ricochet' + randomNumberFromRange(1, 10));
     }
+
     generateRandomDeathSound() {
-        var randomDeathSound = randomNumberFromRange(1, 6);
-        switch (randomDeathSound) {
-            case 1:
-                this.sound.play('death1');
-                break;
-            case 2:
-                this.sound.play('death2');
-                break;
-            case 3:
-                this.sound.play('death3');
-                break;
-            case 4:
-                this.sound.play('death4');
-                break;
-            case 5:
-                this.sound.play('death5');
-                break;
-            case 6:
-                this.sound.play('death6');
-                break;
-            default:
-                break;
-        }
+       this.sound.play('death' + randomNumberFromRange(1, 6));
     }
+
     gameOver() { //For gameover events
         this.scene.start('GameOver');
     }
+    
     victory() { //For victory (generates new level)
         this.scene.start('Game');
     }
