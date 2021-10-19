@@ -39,7 +39,7 @@ class UiButton extends Phaser.GameObjects.Container {
 
       // listen for events
       this.button.on('pointerdown', () => {
-          var menuClick = new Audio('/assets/sound/menuClick.wav'); //Javascript way to load audio, since uibutton doesn't inherit phaser scene
+          var menuClick = new Audio('../assets/sound/menuClick.wav'); //Javascript way to load audio, since uibutton doesn't inherit phaser scene
           if(!muteGame)
             menuClick.play(); //Plays audio on click
           this.targetCallback();

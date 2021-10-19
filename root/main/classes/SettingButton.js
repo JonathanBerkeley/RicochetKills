@@ -58,7 +58,7 @@ class SettingButton extends Phaser.GameObjects.Container {
         });
         this.button.on('pointerdown', () => {
             if (this.mORl == 1) {
-                var menuClick = new Audio('/assets/sound/menuClick.wav'); //Javascript way to load audio, since uibutton doesn't inherit phaser scene
+                var menuClick = new Audio('../assets/sound/menuClick.wav'); //Javascript way to load audio, since uibutton doesn't inherit phaser scene
                 muteGame = !muteGame;
                 if (!muteGame){
                     this.buttonText.setColor("#ff0000");
@@ -70,7 +70,7 @@ class SettingButton extends Phaser.GameObjects.Container {
                     this.buttonText.setColor("#00cc00");
                 }
             } else if (this.mORl == 2) {
-                var menuClick = new Audio('/assets/sound/menuClick.wav'); //Javascript way to load audio, since uibutton doesn't inherit phaser scene
+                var menuClick = new Audio('../assets/sound/menuClick.wav'); //Javascript way to load audio, since uibutton doesn't inherit phaser scene
                 if (!muteGame)
                     menuClick.play(); //Plays audio on click
                 showLine = !showLine;

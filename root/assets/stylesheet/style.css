@@ -3,16 +3,11 @@
 	src: url('../font/spacefont.woff') format('woff'),
 	 url('../font/spacefont.ttf') format('truetype');
 }
-html{
+html {
 	overflow: hidden;
 }
-body{
+body {
 	font-family: spacefont;
-	background-image: url("/assets/metal.jpg");
+	background-image: url("../metal.jpg");
 	background-repeat: repeat;
 }
-/*
-.main{
-	height: 100%;
-}
-*/
